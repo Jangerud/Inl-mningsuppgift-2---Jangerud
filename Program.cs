@@ -5,7 +5,16 @@ namespace Inlämningsuppgift_2___Jangerud
 
     class Person
     {
+        public string name = "";
         public string motivation = "";
+        public int height = 0;
+        public int age = 0;
+        public string hobby = "";
+        public string food = "";
+        public string color = "";
+        public string placeOfBirth = "";
+        public string location = "";
+        public int siblings = 0;
 
     }
 
@@ -23,7 +32,7 @@ namespace Inlämningsuppgift_2___Jangerud
             do
             {
                 WelcomeMessage(programActive);
-
+                MenuChoices(programActive);
 
             } while (programActive);
             
@@ -84,8 +93,44 @@ namespace Inlämningsuppgift_2___Jangerud
 
         static bool MenuChoices(bool x)
         {
+            bool menuActive = true;
+
+            do
+            {
+                Console.WriteLine("Welcome to Skynet!");
+                Console.WriteLine("What is your command?");
+                Console.WriteLine("1. Get list of active rebels in Operation Bästkusten");
+                Console.WriteLine("2. Get valuable intel about known rebels");
+                Console.WriteLine("3. Remove rebel from target list");
+                Console.WriteLine("4. Exit program");
+                int.TryParse(Console.ReadLine(), out int userChoice);
+
+                switch(userChoice)
+                {
+                    case 1:
 
 
+                        break;
+                    case 2:
+
+
+                        break;
+                    case 3:
+
+
+                        break;
+                    case 4:
+
+
+                        break;
+                    default:
+                        Console.WriteLine("You have to choose one of the options provided 1-4.");
+                        break;
+                }
+
+            } while (menuActive);
+
+            return x = false;
         }
 
 
