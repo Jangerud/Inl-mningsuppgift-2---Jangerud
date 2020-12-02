@@ -164,21 +164,82 @@ namespace Inlämningsuppgift_2___Jangerud
 
     }
 
-    class David : Rebel
+    class Officer : Rebel
     {
-        public David()
+
+        public string targetvalue;
+        public string height;
+        public string age;
+        public string siblings;
+
+        public Officer()
         {
 
 
         }
 
-        public David(string name, string motivation, int height, int age, string hobby, string food, string color, string placeOfBirth, string location, int siblings)
+        public Officer(string targetvalue, string name, string motivation, string height, string age, string placeOfBirth, string location, string siblings)
         {
-            this.Name = name;
-            this.Motivation = motivation;
+            this.targetvalue = targetvalue;
+            this.name = name;
+            this.motivation = motivation;
+            this.placeOfBirth = placeOfBirth;
+            this.location = location;
+            this.siblings = siblings;
         }
+
+        public string Targetvalue
+        {
+            get
+            {
+                return targetvalue;
+            }
+            set
+            {
+
+            }
+        }
+
+        public string Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+
+        public string Age
+        {
+            get
+            {
+                return age;
+            }
+            set
+            {
+                age = value;
+            }
+        }
+
+        public string Siblings
+        {
+            get
+            {
+                return siblings;
+            }
+            set
+            {
+                siblings = value;
+            }
+        }
+
+
 
     }
+
 
     class Program
     {
@@ -188,6 +249,24 @@ namespace Inlämningsuppgift_2___Jangerud
             Console.Title = "SKYNET";
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Green;
+
+            //Rebel David = new Rebel("David Ström", "Problem solving", 183, 32, "BJJ", "Tacos", "Blue", "Göteborg", "Norrtälje", 1);
+            //Rebel Johan = new Rebel("Johan Jangerud", "Safer Tomorrow", 194, 34, "Gaming", "Tacos", "Blue", "Mariefred", "Mariefred", 2);
+            //Rebel Oscar = new Rebel("Oscar Möller", "Work", 185, 26, "Football", "Lasagne", "Blue", "Stockholm", "Stockholm", 1);
+            //Rebel Sanjin = new Rebel("Sanjin Ajanic", "Work", 179, 30, "Football", "Pizza", "Blue", "Mostar", "Norrköping", 2);
+            //Rebel Jeremy = new Rebel("Jeremy", "Work", 181, 19, "Gaming", "Elkstew", "Teal", "Köln", "Djurö", 1);
+            //Rebel Cecilia = new Rebel("Cecilia", "Creativity", 163, 29, "The sims", "Risotto", "Yellow", "Norrköping", "Norrköping", 1);
+            //Rebel Ivo = new Rebel("Ivo Nazlic", "Creativity", 174, 42, "Photography", "Scampi", "Black", "Split", "Uppsala", 1);
+
+            //List<Rebel> listOfRebels = new List<Rebel>() { David, Johan, Oscar, Sanjin, Jeremy, Cecilia, Ivo };
+
+            //Officer Robin = new Officer("High", "The Shepard", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            //Officer BjörnB = new Officer("Medium", "The Right Hand Man", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            //Officer BjörnS = new Officer("Medium", "The Educator", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+
+            //List<Officer> listOfOfficers = new List<Officer>() { Robin, BjörnB, BjörnS };
+
+
 
             bool programActive = true;
 
@@ -206,6 +285,7 @@ namespace Inlämningsuppgift_2___Jangerud
         //Metod för välkomstmeddelandet samt login
         static bool WelcomeMessage(bool x)
         {
+
             bool welcome = true;
             int userTries = 3;
 
@@ -268,9 +348,10 @@ namespace Inlämningsuppgift_2___Jangerud
                 Console.WriteLine("Welcome to Skynet!");
                 Console.WriteLine("What is your command?");
                 Console.WriteLine("1. Get list of active rebels in Operation Bästkusten");
-                Console.WriteLine("2. Get valuable intel about known rebels");
-                Console.WriteLine("3. Remove rebel from target list");
-                Console.WriteLine("4. Exit program");
+                Console.WriteLine("2. Get list of active officers in Operation Bästkusten");
+                Console.WriteLine("3. Get valuable intel about known Rebels and Officers");
+                Console.WriteLine("4. Remove rebel from target list");
+                Console.WriteLine("5. Exit program");
                 int.TryParse(Console.ReadLine(), out int userChoice);
 
                 switch(userChoice)
@@ -278,8 +359,31 @@ namespace Inlämningsuppgift_2___Jangerud
                     case 1:
 
 
+                        List<Rebel> listOfRebels = new List<Rebel>();
+                        CreateRebelList(listOfRebels);
+                        
+
+                        foreach(var rebel in listOfRebels)
+                        {
+                            Console.WriteLine($"Name: {rebel.Name}" +
+                                $"\n Motivation: {rebel.Motivation}" +
+                                $"\n Height: {rebel.Height}" +
+                                $"\n Age: {rebel.Age}" +
+                                $"\n Hobbies: {rebel.Hobby}" +
+                                $"\n Favorite Food: {rebel.Food}" +
+                                $"\n Favorite Color: {rebel.Color}" +
+                                $"\n Location of birth: {rebel.PlaceOfBirth}" +
+                                $"\n Current Location: {rebel.Location}" +
+                                $"\n Known Siblings: {rebel.Siblings}" +
+                                $"\n");
+                        }
+
                         break;
                     case 2:
+
+                        List<Officer> listOfOfficers = new List<Officer>();
+                        CreateOfficerList(listOfOfficers);
+
 
 
                         break;
@@ -288,7 +392,11 @@ namespace Inlämningsuppgift_2___Jangerud
 
                         break;
                     case 4:
-                        Console.WriteLine("SKYNET wish you a good day.... Human...");
+
+
+                        break;
+                    case 5:
+                        Console.WriteLine("SKYNET wishes you a good day.... Human...");
                         menuActive = false;
                         break;
                     default:
@@ -300,6 +408,33 @@ namespace Inlämningsuppgift_2___Jangerud
 
             return x = false;
         }
+
+        static List<Officer> CreateOfficerList(List<Officer> x)
+        {
+            Officer Robin = new Officer("High", "The Shepard", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            Officer BjörnB = new Officer("Medium", "The Right Hand Man", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            Officer BjörnS = new Officer("Medium", "The Educator", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+
+            x = new List<Officer>() { Robin, BjörnB, BjörnS };
+
+            return x;
+        }
+
+        static List<Rebel> CreateRebelList(List<Rebel> x)
+        {
+            Rebel David = new Rebel("David Ström", "Problem solving", 183, 32, "BJJ", "Tacos", "Blue", "Göteborg", "Norrtälje", 1);
+            Rebel Johan = new Rebel("Johan Jangerud", "Safer Tomorrow", 194, 34, "Gaming", "Tacos", "Blue", "Mariefred", "Mariefred", 2);
+            Rebel Oscar = new Rebel("Oscar Möller", "Work", 185, 26, "Football", "Lasagne", "Blue", "Stockholm", "Stockholm", 1);
+            Rebel Sanjin = new Rebel("Sanjin Ajanic", "Work", 179, 30, "Football", "Pizza", "Blue", "Mostar", "Norrköping", 2);
+            Rebel Jeremy = new Rebel("Jeremy", "Work", 181, 19, "Gaming", "Elkstew", "Teal", "Köln", "Djurö", 1);
+            Rebel Cecilia = new Rebel("Cecilia", "Creativity", 163, 29, "The sims", "Risotto", "Yellow", "Norrköping", "Norrköping", 1);
+            Rebel Ivo = new Rebel("Ivo Nazlic", "Creativity", 174, 42, "Photography", "Scampi", "Black", "Split", "Uppsala", 1);
+
+            List<Rebel> listOfRebels = new List<Rebel>() { David, Johan, Oscar, Sanjin, Jeremy, Cecilia, Ivo };
+
+            return x;
+        }
+
 
 
 
