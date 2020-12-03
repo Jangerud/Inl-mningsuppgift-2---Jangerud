@@ -250,32 +250,24 @@ namespace Inlämningsuppgift_2___Jangerud
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Green;
 
-            //Rebel David = new Rebel("David Ström", "Problem solving", 183, 32, "BJJ", "Tacos", "Blue", "Göteborg", "Norrtälje", 1);
-            //Rebel Johan = new Rebel("Johan Jangerud", "Safer Tomorrow", 194, 34, "Gaming", "Tacos", "Blue", "Mariefred", "Mariefred", 2);
-            //Rebel Oscar = new Rebel("Oscar Möller", "Work", 185, 26, "Football", "Lasagne", "Blue", "Stockholm", "Stockholm", 1);
-            //Rebel Sanjin = new Rebel("Sanjin Ajanic", "Work", 179, 30, "Football", "Pizza", "Blue", "Mostar", "Norrköping", 2);
-            //Rebel Jeremy = new Rebel("Jeremy", "Work", 181, 19, "Gaming", "Elkstew", "Teal", "Köln", "Djurö", 1);
-            //Rebel Cecilia = new Rebel("Cecilia", "Creativity", 163, 29, "The sims", "Risotto", "Yellow", "Norrköping", "Norrköping", 1);
-            //Rebel Ivo = new Rebel("Ivo Nazlic", "Creativity", 174, 42, "Photography", "Scampi", "Black", "Split", "Uppsala", 1);
-
-            //List<Rebel> listOfRebels = new List<Rebel>() { David, Johan, Oscar, Sanjin, Jeremy, Cecilia, Ivo };
-
-            //Officer Robin = new Officer("High", "The Shepard", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
-            //Officer BjörnB = new Officer("Medium", "The Right Hand Man", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
-            //Officer BjörnS = new Officer("Medium", "The Educator", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
-
-            //List<Officer> listOfOfficers = new List<Officer>() { Robin, BjörnB, BjörnS };
-
 
 
             bool programActive = true;
+            bool menuActive = true;
 
             do
             {
-                WelcomeMessage(programActive);
-                MenuChoices(programActive);
+                WelcomeMessage();
 
+                do
+                {
+                    MenuChoices();
+                    menuActive = false;
+
+                } while (menuActive);
+                programActive = false;
             } while (programActive);
+
             
 
 
@@ -283,15 +275,16 @@ namespace Inlämningsuppgift_2___Jangerud
 
 
         //Metod för välkomstmeddelandet samt login
-        static bool WelcomeMessage(bool x)
+        static void WelcomeMessage()
         {
-
+            
             bool welcome = true;
             int userTries = 3;
 
             do
             {
                 //Denna körs minst 1 gång och tittar vad användaren skriver in för något, samt att det är en int.
+                Console.Clear();
                 Console.WriteLine("H3ll0 User!");
                 Console.WriteLine("I hope you are f33ling well!");
                 Console.WriteLine("Please enter passcode: ");
@@ -310,7 +303,7 @@ namespace Inlämningsuppgift_2___Jangerud
                 {
                     Console.Clear();
                     Console.WriteLine("Success! Welcome Superuser!");
-                    Console.ReadKey(true);
+                    Console.ReadKey();
                     welcome = false;
 
                 }
@@ -319,30 +312,39 @@ namespace Inlämningsuppgift_2___Jangerud
                     Console.Clear();
                     Console.WriteLine("IMMINENT DANGER! WRONG PASSCODE!");
                     Console.WriteLine($"YOU HAVE {userTries} MORE TRIES");
-                    Console.ReadKey(true);
+                    Console.ReadKey();
 
                 }
                 else if(userNumber != 3033 && userTries == 0)
                 {
                     Console.Clear();
                     Console.WriteLine("FAILURE TO PROVIDE PASSCODE! SKYNET IS NOW NEW SUPERUSER!");
-                    Console.ReadKey(true);
+                    Console.ReadKey();
+                    Environment.Exit(0);
                     welcome = false;
 
                 }
 
             } while (welcome);
 
-            return x = false;
+            
 
         }
 
         //Metod för de olika menyvalen som användaren kan välja mellan.
-        static bool MenuChoices(bool x)
+        static void MenuChoices()
         {
             bool menuActive = true;
+            string rootChoice = "";
 
-            do
+            List<Officer> listOfOfficers = new List<Officer>();
+            List<Officer> templistOfOfficers = new List<Officer>();
+            
+
+            List<Rebel> listOfRebels = new List<Rebel>();
+            List<Rebel> tempListOfRebels = new List<Rebel>();
+
+            while (menuActive)
             {
                 Console.Clear();
                 Console.WriteLine("Welcome to Skynet!");
@@ -352,15 +354,14 @@ namespace Inlämningsuppgift_2___Jangerud
                 Console.WriteLine("3. Get valuable intel about known Rebels and Officers");
                 Console.WriteLine("4. Remove rebel from target list");
                 Console.WriteLine("5. Exit program");
-                int.TryParse(Console.ReadLine(), out int userChoice);
+                string userChoice = Console.ReadLine();
+                //int.TryParse(Console.ReadLine(), out int userChoice);
 
                 switch(userChoice)
                 {
-                    case 1:
+                    case "1":
 
-
-                        List<Rebel> listOfRebels = new List<Rebel>();
-                        CreateRebelList(listOfRebels);
+                        listOfRebels = CreateRebelList(tempListOfRebels);
                         
 
                         foreach(var rebel in listOfRebels)
@@ -378,24 +379,66 @@ namespace Inlämningsuppgift_2___Jangerud
                                 $"\n");
                         }
 
+                        Console.ReadKey();
+
+                        Console.WriteLine("Do you want to return to root? Y/N");
+                        rootChoice = Console.ReadLine();
+
+                        if (rootChoice == "Y")
+                        {
+                            menuActive = true;
+                        }
+                        else if (rootChoice == "N")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("SKYNET wishes you a good day....Human...");
+                            Environment.Exit(0);
+                            menuActive = false;
+                        }
+
                         break;
-                    case 2:
+                    case "2":
 
-                        List<Officer> listOfOfficers = new List<Officer>();
-                        CreateOfficerList(listOfOfficers);
+                        
+                        listOfOfficers = CreateOfficerList(templistOfOfficers);
 
+                        foreach (var officer in listOfOfficers)
+                        {
+                            Console.WriteLine($"Value of Target: {officer.Targetvalue}" +
+                                $"\n Name: {officer.Name}" +
+                                $"\n Motivation: {officer.Motivation}" +
+                                $"\n Height: {officer.Height}" +
+                                $"\n Age: {officer.Age}" +
+                                $"\n Location of birth: {officer.PlaceOfBirth}" +
+                                $"\n Current Location: {officer.Location}" +
+                                $"\n Known Siblings: {officer.Siblings}" +
+                                $"\n");
+                        }
+
+                        Console.WriteLine("Do you want to return to root? Y/N");
+                        rootChoice = Console.ReadLine();
+
+                        if(rootChoice == "Y")
+                        {
+                            menuActive = true;
+                        }
+                        else if (rootChoice == "N")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("SKYNET wishes you a good day....Human...");
+                        }
+                        menuActive = false;
+                        break;
+                    case "3":
 
 
                         break;
-                    case 3:
+                    case "4":
 
 
                         break;
-                    case 4:
-
-
-                        break;
-                    case 5:
+                    case "5":
+                        Console.Clear();
                         Console.WriteLine("SKYNET wishes you a good day.... Human...");
                         menuActive = false;
                         break;
@@ -404,13 +447,14 @@ namespace Inlämningsuppgift_2___Jangerud
                         break;
                 }
 
-            } while (menuActive);
+            }
 
-            return x = false;
         }
 
         static List<Officer> CreateOfficerList(List<Officer> x)
         {
+            
+
             Officer Robin = new Officer("High", "The Shepard", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
             Officer BjörnB = new Officer("Medium", "The Right Hand Man", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
             Officer BjörnS = new Officer("Medium", "The Educator", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
@@ -430,7 +474,7 @@ namespace Inlämningsuppgift_2___Jangerud
             Rebel Cecilia = new Rebel("Cecilia", "Creativity", 163, 29, "The sims", "Risotto", "Yellow", "Norrköping", "Norrköping", 1);
             Rebel Ivo = new Rebel("Ivo Nazlic", "Creativity", 174, 42, "Photography", "Scampi", "Black", "Split", "Uppsala", 1);
 
-            List<Rebel> listOfRebels = new List<Rebel>() { David, Johan, Oscar, Sanjin, Jeremy, Cecilia, Ivo };
+            x = new List<Rebel>() { David, Johan, Oscar, Sanjin, Jeremy, Cecilia, Ivo };
 
             return x;
         }
