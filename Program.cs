@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace Inlämningsuppgift_2___Jangerud
 {
-
+    //Basklassen Rebel skapas här.
     class Rebel
     {
+        //Fälten som vi väljer att ha med skrivs här.
         public string name;
         public string motivation;
         public int height;
@@ -39,7 +40,7 @@ namespace Inlämningsuppgift_2___Jangerud
         }
 
 
-        //Properties
+        //Properties för basklassen.
         public string Name
         {
             get
@@ -164,30 +165,35 @@ namespace Inlämningsuppgift_2___Jangerud
 
     }
 
+    //Subklass till klassen Rebel skapas här.
     class Officer : Rebel
     {
-
+        //Fält för subklassen Officer.
         public string targetvalue;
         public string height;
         public string age;
         public string siblings;
 
+        //Förenklad konstruktor.
         public Officer()
         {
 
 
         }
 
-        public Officer(string targetvalue, string name, string motivation, string height, string age, string placeOfBirth, string location, string siblings)
+        //Konstruktor nr 2.
+        public Officer(string name, string targetvalue, string motivation, string height, string age, string placeOfBirth, string location, string siblings)
         {
-            this.targetvalue = targetvalue;
+            
             this.name = name;
+            this.targetvalue = targetvalue;
             this.motivation = motivation;
             this.placeOfBirth = placeOfBirth;
             this.location = location;
             this.siblings = siblings;
         }
 
+        //Properties för subklassen Officer.
         public string Targetvalue
         {
             get
@@ -240,21 +246,36 @@ namespace Inlämningsuppgift_2___Jangerud
 
     }
 
-
+    //Klassen Program som ska köra programmet.
     class Program
     {
 
+        //Listor skapas i dessa fält.
+        static List<Officer> listOfOfficers = new List<Officer>();
+        static List<Officer> templistOfOfficers = new List<Officer>();
+
+
+        static List<Rebel> listOfRebels = new List<Rebel>();
+        static List<Rebel> tempListOfRebels = new List<Rebel>();
+
+        
+
         static void Main(string[] args)
         {
+            //UI inställningarna.
             Console.Title = "SKYNET";
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Green;
 
+            //Listorna populeras här.
+            listOfOfficers = CreateOfficerList(templistOfOfficers);
+            listOfRebels = CreateRebelList(tempListOfRebels);
 
 
             bool programActive = true;
             bool menuActive = true;
 
+            //Do-while loop som startar hela programmet samt håller igång det.
             do
             {
                 WelcomeMessage();
@@ -337,12 +358,7 @@ namespace Inlämningsuppgift_2___Jangerud
             bool menuActive = true;
             string rootChoice = "";
 
-            List<Officer> listOfOfficers = new List<Officer>();
-            List<Officer> templistOfOfficers = new List<Officer>();
-            
 
-            List<Rebel> listOfRebels = new List<Rebel>();
-            List<Rebel> tempListOfRebels = new List<Rebel>();
 
             while (menuActive)
             {
@@ -352,35 +368,26 @@ namespace Inlämningsuppgift_2___Jangerud
                 Console.WriteLine("1. Get list of active rebels in Operation Bästkusten");
                 Console.WriteLine("2. Get list of active officers in Operation Bästkusten");
                 Console.WriteLine("3. Get valuable intel about known Rebels and Officers");
-                Console.WriteLine("4. Remove rebel from target list");
+                Console.WriteLine("4. Remove rebel or high valued target from target list");
                 Console.WriteLine("5. Exit program");
                 string userChoice = Console.ReadLine();
-                //int.TryParse(Console.ReadLine(), out int userChoice);
+                
 
                 switch(userChoice)
                 {
                     case "1":
 
-                        listOfRebels = CreateRebelList(tempListOfRebels);
-                        
-
+                        //Foreach loop som listar alla rebeller i den specifierade listan.
                         foreach(var rebel in listOfRebels)
                         {
                             Console.WriteLine($"Name: {rebel.Name}" +
-                                $"\n Motivation: {rebel.Motivation}" +
-                                $"\n Height: {rebel.Height}" +
-                                $"\n Age: {rebel.Age}" +
-                                $"\n Hobbies: {rebel.Hobby}" +
-                                $"\n Favorite Food: {rebel.Food}" +
-                                $"\n Favorite Color: {rebel.Color}" +
-                                $"\n Location of birth: {rebel.PlaceOfBirth}" +
-                                $"\n Current Location: {rebel.Location}" +
-                                $"\n Known Siblings: {rebel.Siblings}" +
                                 $"\n");
                         }
 
+                        //Här använder jag mig utav ReadKey för att inte programmet ska fortsätta rulla på. Utan att användaren har lite kontroll när det fortsätter.
                         Console.ReadKey();
 
+                        //Denna fråga använder jag mig utav mer i programmet för att se om användaren vill avsluta efter sitt val eller gå tillbaka till menyvalen.
                         Console.WriteLine("Do you want to return to root? Y/N");
                         rootChoice = Console.ReadLine();
 
@@ -392,6 +399,8 @@ namespace Inlämningsuppgift_2___Jangerud
                         {
                             Console.Clear();
                             Console.WriteLine("SKYNET wishes you a good day....Human...");
+                            /*Environment.Exit gjorde det enkelt för mig att avsluta programmet vid detta val, då while loopen krånglade med att avslutas.
+                             * */
                             Environment.Exit(0);
                             menuActive = false;
                         }
@@ -399,8 +408,34 @@ namespace Inlämningsuppgift_2___Jangerud
                         break;
                     case "2":
 
+                        //Foreach loop som listar alla officers i den specifierade listan.
+                        foreach (var officer in listOfOfficers)
+                        {
+                            Console.WriteLine($"Name: {officer.Name}" +
+                                $"\n Value of Target: { officer.Targetvalue}" +
+                                $"\n");
+                        }
+
+                        Console.WriteLine("Do you want to return to root? Y/N");
+                        rootChoice = Console.ReadLine();
+
+                        if(rootChoice == "Y" || rootChoice == "y")
+                        {
+                            menuActive = true;
+                        }
+                        else if (rootChoice == "N" || rootChoice == "n")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("SKYNET wishes you a good day....Human...");
+                            menuActive = false;
+                        }
                         
-                        listOfOfficers = CreateOfficerList(templistOfOfficers);
+                        break;
+                    case "3":
+
+                        //Detta valet listar båda listornas(rebeller och officers) innehåll samt de attributer/properties som de objekten har.
+                        Console.WriteLine("------Officers-----" +
+                            "\n ");
 
                         foreach (var officer in listOfOfficers)
                         {
@@ -415,33 +450,110 @@ namespace Inlämningsuppgift_2___Jangerud
                                 $"\n");
                         }
 
+                        Console.WriteLine("------Rebels-----" +
+                            "\n ");
+
+                        foreach (var rebel in listOfRebels)
+                        {
+                            Console.WriteLine($"Name: {rebel.Name}" +
+                                $"\n Motivation: {rebel.Motivation}" +
+                                $"\n Height: {rebel.Height}" +
+                                $"\n Age: {rebel.Age}" +
+                                $"\n Hobbies: {rebel.Hobby}" +
+                                $"\n Favorite Food: {rebel.Food}" +
+                                $"\n Favorite Color: {rebel.Color}" +
+                                $"\n Location of birth: {rebel.PlaceOfBirth}" +
+                                $"\n Current Location: {rebel.Location}" +
+                                $"\n Known Siblings: {rebel.Siblings}" +
+                                $"\n");
+                        }
+
                         Console.WriteLine("Do you want to return to root? Y/N");
                         rootChoice = Console.ReadLine();
 
-                        if(rootChoice == "Y")
+                        if (rootChoice == "Y" || rootChoice == "y")
                         {
                             menuActive = true;
                         }
-                        else if (rootChoice == "N")
+                        else if (rootChoice == "N" || rootChoice == "n")
                         {
                             Console.Clear();
                             Console.WriteLine("SKYNET wishes you a good day....Human...");
+                            menuActive = false;
                         }
-                        menuActive = false;
-                        break;
-                    case "3":
-
+                        
 
                         break;
                     case "4":
+                        //Det här valet hanterar borttagning av rebel eller officer.
+                        Console.Clear();
+                        Console.WriteLine("Have you eliminated a rebel or an officer?");
+                        string targetChoice = Console.ReadLine();
 
+                        //If sats som kollar om valet är Rebel eller Officer samt överensstämmer namnet användaren skriver in med den aktuella listan för att se om målet finns med.
+                        if(targetChoice == "Rebel" || targetChoice == "rebel")
+                        {
+                            Console.WriteLine("Type in the name of the Rebel.");
+                            string rebelName = Console.ReadLine();
+
+                            for(int i = 0; i < listOfRebels.Count; i++)
+                            {
+                                //If-sats som checkar om namnet användaren skriver in finns med i listan. Om det finns med så tar den bort den rebellen där namnet överensstämmer.
+                                if (listOfRebels[i].name == rebelName)
+                                {
+                                    Console.Clear();
+                                    listOfRebels.RemoveAt(i);
+                                    Console.WriteLine("Target has been removed. Well done!");
+                                    Console.ReadKey();
+                                    i = listOfRebels.Count;
+                                    menuActive = true;
+                                }
+                                else if(listOfRebels[i].name != rebelName)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Could not find the specified Rebel. Please try again.");
+                                    Console.ReadKey();
+                                    i = listOfRebels.Count;
+                                    menuActive = true;
+                                }
+                                
+                            }
+                        //Samma som ovan fast för Officer och listOfOfficers.
+                        }else if(targetChoice == "Officer" || targetChoice == "officer")
+                        {
+                            Console.WriteLine("Type in the name of the Officer.");
+                            string officerName = Console.ReadLine();
+
+                            for (int i = 0; i < listOfOfficers.Count; i++)
+                            {
+
+                                if (listOfRebels[i].name == officerName)
+                                {
+                                    listOfOfficers.RemoveAt(i);
+                                    Console.Clear();
+                                    Console.WriteLine("Target has been removed. Well done!");
+                                    Console.ReadKey();
+                                    menuActive = true;
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Could not find the specified Officer. Make sure you type the full name of the target.");
+                                    Console.ReadKey();
+                                    menuActive = true;
+                                }
+                            }
+                        }
 
                         break;
+
+                        //Sista valet där man avslutar programmet.
                     case "5":
                         Console.Clear();
                         Console.WriteLine("SKYNET wishes you a good day.... Human...");
                         menuActive = false;
                         break;
+                        //Default som måste vara med i en switch-sats.
                     default:
                         Console.WriteLine("You have to choose one of the options provided 1-4.");
                         break;
@@ -451,19 +563,21 @@ namespace Inlämningsuppgift_2___Jangerud
 
         }
 
+        //Metod som populerar listan av Officerare. Här skapar den objekt av klassen Officer och skriver in den information som klassen och basklassen(Rebel) behöver för att skapa objekten.
         static List<Officer> CreateOfficerList(List<Officer> x)
         {
             
 
-            Officer Robin = new Officer("High", "The Shepard", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
-            Officer BjörnB = new Officer("Medium", "The Right Hand Man", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
-            Officer BjörnS = new Officer("Medium", "The Educator", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            Officer Robin = new Officer("Robin 'The Shepard' Kamo", "High", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            Officer BjörnB = new Officer("Björn 'The Right Hand Man' Bergquist", "Medium", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
+            Officer BjörnS = new Officer("Björn 'The Educator' Strömberg", "Medium", "Destroy Skynet", "Unknown", "Unknown", "Unknown", "Göteborg", "Unknown");
 
             x = new List<Officer>() { Robin, BjörnB, BjörnS };
 
             return x;
         }
 
+        //Metod som populerar listan av rebeller. Här skapar den objekt av klassen Rebel och skriver in den information som klassen behöver för att skapa objekten.
         static List<Rebel> CreateRebelList(List<Rebel> x)
         {
             Rebel David = new Rebel("David Ström", "Problem solving", 183, 32, "BJJ", "Tacos", "Blue", "Göteborg", "Norrtälje", 1);
