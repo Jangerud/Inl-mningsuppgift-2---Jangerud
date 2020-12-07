@@ -9,14 +9,14 @@ namespace Inlämningsuppgift_2___Jangerud
         //Fälten som vi väljer att ha med skrivs här.
         public string name;
         public string motivation;
-        public int height;
-        public int age;
+        public string height;
+        public string age;
         public string hobby;
         public string food;
         public string color;
         public string placeOfBirth;
         public string location;
-        public int siblings;
+        public string siblings;
 
         //förenklad konstruktor.
         public Rebel()
@@ -25,7 +25,7 @@ namespace Inlämningsuppgift_2___Jangerud
 
         }
         //Konstruktor för basklassen.
-        public Rebel(string name, string motivation, int height, int age, string hobby, string food, string color, string placeOfBirth, string location, int siblings)
+        public Rebel(string name, string motivation, string height, string age, string hobby, string food, string color, string placeOfBirth, string location, string siblings)
         {
             this.name = name;
             this.motivation = motivation;
@@ -65,7 +65,7 @@ namespace Inlämningsuppgift_2___Jangerud
             }
         }
 
-        public int Height
+        public string Height
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Inlämningsuppgift_2___Jangerud
             }
         }
 
-        public int Age
+        public string Age
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Inlämningsuppgift_2___Jangerud
             }
         }
 
-        public int Siblings
+        public string Siblings
         {
             get
             {
@@ -169,10 +169,7 @@ namespace Inlämningsuppgift_2___Jangerud
     class Officer : Rebel
     {
         //Fält för subklassen Officer.
-        public string targetvalue;
-        public string height;
-        public string age;
-        public string siblings;
+        public string targetValue;
 
         //Förenklad konstruktor.
         public Officer()
@@ -186,61 +183,28 @@ namespace Inlämningsuppgift_2___Jangerud
         {
             
             this.name = name;
-            this.targetvalue = targetvalue;
+            this.targetValue = targetvalue;
             this.motivation = motivation;
+            this.height = height;
+            this.age = age;
             this.placeOfBirth = placeOfBirth;
             this.location = location;
             this.siblings = siblings;
         }
 
         //Properties för subklassen Officer.
-        public string Targetvalue
+        public string TargetValue
         {
             get
             {
-                return targetvalue;
+                return targetValue;
             }
             set
             {
-
+                targetValue = value;
             }
         }
 
-        public string Height
-        {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
-        }
-
-        public string Age
-        {
-            get
-            {
-                return age;
-            }
-            set
-            {
-                age = value;
-            }
-        }
-
-        public string Siblings
-        {
-            get
-            {
-                return siblings;
-            }
-            set
-            {
-                siblings = value;
-            }
-        }
 
 
 
@@ -412,7 +376,7 @@ namespace Inlämningsuppgift_2___Jangerud
                         foreach (var officer in listOfOfficers)
                         {
                             Console.WriteLine($"Name: {officer.Name}" +
-                                $"\n Value of Target: { officer.Targetvalue}" +
+                                $"\n Value of Target: { officer.TargetValue}" +
                                 $"\n");
                         }
 
@@ -439,7 +403,7 @@ namespace Inlämningsuppgift_2___Jangerud
 
                         foreach (var officer in listOfOfficers)
                         {
-                            Console.WriteLine($"Value of Target: {officer.Targetvalue}" +
+                            Console.WriteLine($"Value of Target: {officer.TargetValue}" +
                                 $"\n Name: {officer.Name}" +
                                 $"\n Motivation: {officer.Motivation}" +
                                 $"\n Height: {officer.Height}" +
@@ -580,13 +544,13 @@ namespace Inlämningsuppgift_2___Jangerud
         //Metod som populerar listan av rebeller. Här skapar den objekt av klassen Rebel och skriver in den information som klassen behöver för att skapa objekten.
         static List<Rebel> CreateRebelList(List<Rebel> x)
         {
-            Rebel David = new Rebel("David Ström", "Problem solving", 183, 32, "BJJ", "Tacos", "Blue", "Göteborg", "Norrtälje", 1);
-            Rebel Johan = new Rebel("Johan Jangerud", "Safer Tomorrow", 194, 34, "Gaming", "Tacos", "Blue", "Mariefred", "Mariefred", 2);
-            Rebel Oscar = new Rebel("Oscar Möller", "Work", 185, 26, "Football", "Lasagne", "Blue", "Stockholm", "Stockholm", 1);
-            Rebel Sanjin = new Rebel("Sanjin Ajanic", "Work", 179, 30, "Football", "Pizza", "Blue", "Mostar", "Norrköping", 2);
-            Rebel Jeremy = new Rebel("Jeremy", "Work", 181, 19, "Gaming", "Elkstew", "Teal", "Köln", "Djurö", 1);
-            Rebel Cecilia = new Rebel("Cecilia", "Creativity", 163, 29, "The sims", "Risotto", "Yellow", "Norrköping", "Norrköping", 1);
-            Rebel Ivo = new Rebel("Ivo Nazlic", "Creativity", 174, 42, "Photography", "Scampi", "Black", "Split", "Uppsala", 1);
+            Rebel David = new Rebel("David Ström", "Problem solving", "183", "32", "BJJ", "Tacos", "Blue", "Göteborg", "Norrtälje", "1");
+            Rebel Johan = new Rebel("Johan Jangerud", "Safer Tomorrow", "194", "34", "Gaming", "Tacos", "Blue", "Mariefred", "Mariefred", "2");
+            Rebel Oscar = new Rebel("Oscar Möller", "Work", "185", "26", "Football", "Lasagne", "Blue", "Stockholm", "Stockholm", "1");
+            Rebel Sanjin = new Rebel("Sanjin Ajanic", "Work", "179", "30", "Football", "Pizza", "Blue", "Mostar", "Norrköping", "2");
+            Rebel Jeremy = new Rebel("Jeremy", "Work", "181", "19", "Gaming", "Elkstew", "Teal", "Köln", "Djurö", "1");
+            Rebel Cecilia = new Rebel("Cecilia", "Creativity", "163", "29", "The sims", "Risotto", "Yellow", "Norrköping", "Norrköping", "1");
+            Rebel Ivo = new Rebel("Ivo Nazlic", "Creativity", "174", "42", "Photography", "Scampi", "Black", "Split", "Uppsala", "1");
 
             x = new List<Rebel>() { David, Johan, Oscar, Sanjin, Jeremy, Cecilia, Ivo };
 
